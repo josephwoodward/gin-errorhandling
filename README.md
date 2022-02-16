@@ -1,8 +1,8 @@
 # Gin Error Handling Middleware
 
-Gin Error Handling Middleware is a piece of middleware for the popular [Gin framework](https://github.com/gin-gonic/gin) that allows you to configure application level error handling centrally as a convention within your Go application, as opposed to explicitly handling exceptions within each controller action.
+Gin Error Handling Middleware is a middleware for the popular [Gin framework](https://github.com/gin-gonic/gin) that enables you to configure error handling centrally as a convention within your Go application, as opposed to explicitly handling exceptions within each handler or controller action.
 
-Configuring your error handling this way reaps the following benefits:
+This gives the following benefits:
 
 - Centralised location for handling errors
 - Reduce boilerplate 'error to response' mappings in your request handlers/controller actions
