@@ -16,7 +16,10 @@ func main() {
 	r := gin.Default()
 	r.Use(
 		ErrorHandler(
-			Map(NotFoundError).ToStatusCode(http.StatusNotFound),
+			Map(NotFoundError).ToResponse(func(c *gin.Context, err error) {
+				c.Status(http.StatusNotFound)
+				c.Writer.Write([]byte(err.Error()))
+			}),
 		))
 
 	r.GET("/ping", func(c *gin.Context) {
