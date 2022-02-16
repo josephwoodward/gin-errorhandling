@@ -1,4 +1,4 @@
-package errormiddleware_test
+package middleware_test
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	. "github.com/gin-errorhandlingmiddleware/errorhandlingmiddleware"
+	. "github.com/gin-errorhandling/middleware"
 	"github.com/gin-gonic/gin"
 )
 
@@ -61,4 +61,28 @@ func TestMapErrorStructToStatusCode(t *testing.T) {
 
 	// Assert
 	assert.Equal(t, recorder.Result().StatusCode, http.StatusBadRequest)
+}
+
+func TestMapErrorResponseFunc(t *testing.T) {
+	// Arrange
+	router := gin.Default()
+	router.Use(
+		ErrorHandler(
+			Map(NotFoundError).ToResponse(func(ctx *gin.Context, err error) {
+				ctx.Status(http.StatusNotFound)
+				ctx.Writer.Write([]byte(err.Error()))
+			}),
+		))
+
+	// Act
+	router.GET("/", func(context *gin.Context) {
+		_ = context.Error(NotFoundError)
+	})
+
+	recorder := httptest.NewRecorder()
+	router.ServeHTTP(recorder, httptest.NewRequest("GET", "/", nil))
+
+	// Assert
+	assert.Equal(t, http.StatusNotFound, recorder.Result().StatusCode)
+	assert.Equal(t, NotFoundError.Error(), recorder.Body.String())
 }

@@ -1,4 +1,4 @@
-module github.com/gin-errorhandlingmiddleware
+module github.com/gin-errorhandling
 
 go 1.17
 
