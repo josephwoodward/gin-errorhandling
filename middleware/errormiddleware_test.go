@@ -32,8 +32,8 @@ func TestMapSimpleErrorToStatusCode(t *testing.T) {
 		))
 
 	// Act
-	router.GET("/", func(context *gin.Context) {
-		_ = context.Error(NotFoundError)
+	router.GET("/", func(c *gin.Context) {
+		_ = c.Error(NotFoundError)
 	})
 
 	recorder := httptest.NewRecorder()
@@ -52,8 +52,8 @@ func TestMapErrorStructToStatusCode(t *testing.T) {
 		))
 
 	// Act
-	router.GET("/", func(context *gin.Context) {
-		_ = context.Error(&ValidationError{})
+	router.GET("/", func(c *gin.Context) {
+		_ = c.Error(&ValidationError{})
 	})
 
 	recorder := httptest.NewRecorder()
@@ -68,15 +68,15 @@ func TestMapErrorResponseFunc(t *testing.T) {
 	router := gin.Default()
 	router.Use(
 		ErrorHandler(
-			Map(NotFoundError).ToResponse(func(ctx *gin.Context, err error) {
-				ctx.Status(http.StatusNotFound)
-				ctx.Writer.Write([]byte(err.Error()))
+			Map(NotFoundError).ToResponse(func(c *gin.Context, err error) {
+				c.Status(http.StatusNotFound)
+				c.Writer.Write([]byte(err.Error()))
 			}),
 		))
 
 	// Act
-	router.GET("/", func(context *gin.Context) {
-		_ = context.Error(NotFoundError)
+	router.GET("/", func(c *gin.Context) {
+		_ = c.Error(NotFoundError)
 	})
 
 	recorder := httptest.NewRecorder()
