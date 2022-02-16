@@ -18,9 +18,7 @@ func ErrorHandler(errMap ...*errorMapping) gin.HandlerFunc {
 			for _, e2 := range e.fromErrors {
 				if lastErr.Err == e2 {
 					e.toResponse(context, lastErr.Err)
-					//context.Status(e.toStatusCode)
 				} else if isType(lastErr.Err, e2) {
-					//context.Status(e.toStatusCode)
 					e.toResponse(context, lastErr.Err)
 				}
 			}
@@ -30,9 +28,6 @@ func ErrorHandler(errMap ...*errorMapping) gin.HandlerFunc {
 
 func isType(a, b interface{}) bool {
 	return reflect.TypeOf(a) == reflect.TypeOf(b)
-}
-
-type mapperConfig struct {
 }
 
 // errorMapping maps a single set of errors to a single response
