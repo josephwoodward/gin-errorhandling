@@ -10,7 +10,7 @@ This gives the following benefits:
 
 ## Quick Start
 
-### Simple error handling configuration
+### Mapping to a status code
 
 ```go
 var (
@@ -41,7 +41,7 @@ Content-Length: 0
 Connection: close
 ```
 
-### More control over the response
+### Mapping to the response
 
 ```go
 var (
