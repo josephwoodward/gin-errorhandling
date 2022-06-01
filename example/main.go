@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	. "github.com/gin-errorhandling/middleware"
-	"github.com/gin-gonic/gin"
-
 	"net/http"
+
+	. "github.com/JosephWoodward/gin-errorhandling/middleware"
+	"github.com/gin-gonic/gin"
 )
 
 var (

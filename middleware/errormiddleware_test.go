@@ -2,13 +2,13 @@ package middleware_test
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	. "github.com/gin-errorhandling/middleware"
+	. "github.com/JosephWoodward/gin-errorhandling/middleware"
 	"github.com/gin-gonic/gin"
+	"github.com/stretchr/testify/assert"
 )
 
 var (
