@@ -43,6 +43,28 @@ func TestMapSimpleErrorToStatusCode(t *testing.T) {
 	assert.Equal(t, recorder.Result().StatusCode, http.StatusNotFound)
 }
 
+func TestMapWrappedErrorToStatusCode(t *testing.T) {
+	wrapped := fmt.Errorf("wrapped error: %w", NotFoundError)
+
+	// Arrange
+	router := gin.Default()
+	router.Use(
+		ErrorHandler(
+			Map(NotFoundError).ToStatusCode(http.StatusNotFound),
+		))
+
+	// Act
+	router.GET("/", func(c *gin.Context) {
+		_ = c.Error(wrapped)
+	})
+
+	recorder := httptest.NewRecorder()
+	router.ServeHTTP(recorder, httptest.NewRequest("GET", "/", nil))
+
+	// Assert
+	assert.Equal(t, recorder.Result().StatusCode, http.StatusNotFound)
+}
+
 func TestMapErrorStructToStatusCode(t *testing.T) {
 	// Arrange
 	router := gin.Default()

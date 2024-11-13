@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"errors"
 	"reflect"
 
 	"github.com/gin-gonic/gin"
@@ -18,7 +19,7 @@ func ErrorHandler(errMap ...*errorMapping) gin.HandlerFunc {
 
 		for _, e := range errMap {
 			for _, e2 := range e.fromErrors {
-				if lastErr.Err == e2 {
+				if errors.Is(lastErr.Err, e2) {
 					e.toResponse(context, lastErr.Err)
 				} else if isType(lastErr.Err, e2) {
 					e.toResponse(context, lastErr.Err)
